@@ -1,9 +1,8 @@
 'use strict';
 
+const axios = require('axios');
 const express = require('express');
 const cors = require('cors');
-const data = require('./data/weather.json');
-const { application } = require('express');
 
 require('dotenv').config();
 
@@ -16,20 +15,25 @@ const PORT = process.env.PORT || 3002;
 class Forecast {
   constructor(ForecastObject) {
     this.date = ForecastObject.datetime;
-    this.description = ForecastObject.weather.description
+    this.description = ForecastObject.weather.description;
+    this.high = ForecastObject.high_temp;
+    this.low = ForecastObject.low_temp
   }
 }
 
-//Routes 
-app.get('/weather', (req, res, next) => {
+//Routes
+app.get('/', (req, res) => {
+  res.status(200).send('Alive!');
+});
+
+app.get('/weather', async (req, res, next) => {
   try {
-    let cityReq = req.query.searchQuery;
+    let coord = [req.query.lat, req.query.lon];
+    let url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&lat=${coord[0]}&lon=${coord[1]}&days=5`
 
-    let city = data.find(cityData => {
-      return cityData.city_name === cityReq;
-    })
+    let forecast = await axios(url);
 
-    let weatherData = city.data.map(info => {
+    let weatherData = forecast.data.map(info => {
       return new Forecast(info);
     });
 
