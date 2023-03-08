@@ -3,6 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 const data = require('./data/weather.json');
+const { application } = require('express');
 
 require('dotenv').config();
 
@@ -41,6 +42,10 @@ app.get('/weather', (req, res, next) => {
 
 app.get('*', (req, res) => {
   res.send('The resource requested does not exist');
+})
+
+app.use((error, request, response, next) => {
+  response.status(500).send(error.message);
 })
 
 // Listening
