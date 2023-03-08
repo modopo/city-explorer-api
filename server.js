@@ -33,7 +33,7 @@ app.get('/weather', async (req, res, next) => {
 
     let forecast = await axios(url);
 
-    let weatherData = forecast.data.map(info => {
+    let weatherData = forecast.data.data.map(info => {
       return new Forecast(info);
     });
 
