@@ -21,6 +21,7 @@ class Forecast {
   }
 }
 
+//Movie class to contain movie data
 class Movie {
   constructor(MovieObject) {
     this.title = MovieObject.original_title,
@@ -39,6 +40,7 @@ app.get('/', (req, res) => {
   res.status(200).send('Alive!');
 });
 
+//Forecast route
 app.get('/weather', async (req, res, next) => {
   try {
     let coord = [req.query.lat, req.query.lon];
@@ -57,6 +59,7 @@ app.get('/weather', async (req, res, next) => {
   }
 });
 
+//Movies route
 app.get('/movies', async (req, res, next) => {
   try {
     let city = req.query.search;
@@ -64,8 +67,6 @@ app.get('/movies', async (req, res, next) => {
     let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.THEMOVIEDB_API_KEY}&language=en-US&query=${city}&page=1&include_adult=false`;
 
     let movies = await axios(url);
-
-    console.log(movies);
 
     let movieData = movies.data.results.map(movie => {
       return new Movie(movie);
@@ -76,8 +77,6 @@ app.get('/movies', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
-
 });
 
 app.get('*', (req, res) => {
