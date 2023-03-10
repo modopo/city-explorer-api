@@ -27,7 +27,7 @@ function getMovies(req, res, next) {
 
   axios.get(url, { params })
     .then(movieData => movieData.data.results.map(movie => new Movie(movie)))
-    .then(dataToSend => res.send(dataToSend).sendStatus(200))
+    .then(dataToSend => res.send(dataToSend))
     .catch(err => console.error(err));
 }
 
