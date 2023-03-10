@@ -1,27 +1,17 @@
 'use strict';
 
-const getWeather = require('./modules/weather')
-const getMovies = require('./modules/movies')
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-require('dotenv').config();
-
+const weather = require('./modules/weather.js');
+const movie = require('./modules/movies.js')
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 3002;
+app.get('/weather', weatherHandler);
 
-//Routes
-app.get('/', (req, res) => {
-  res.status(200).send('Alive!');
-});
-
-//Forecast route
-app.get('/weather', getWeather);
-
-//Movies route
-app.get('/movies', getMovies);
+app.get('/movies', movieHandler);
 
 app.get('*', (req, res) => {
   res.send('The resource requested does not exist');
@@ -31,7 +21,26 @@ app.use((error, request, response, next) => {
   response.status(500).send(error.message);
 })
 
-// Listening
-app.listen(PORT, () => {
-  console.log(`Listening...port ${PORT}`);
-})
+app.listen(process.env.PORT, () => console.log(`Server up on ${process.env.PORT}`));
+
+function weatherHandler(request, response) {
+  const { lat, lon } = request.query;
+
+  weather(lat, lon)
+  .then(forecast => response.send(forecast).status(200))
+  .catch((error) => {
+    console.error(error);
+    response.status(200).send('Sorry. Something went wrong!')
+  });
+}
+
+function movieHandler(request, response) {
+  const search = request.query.search;
+
+  movie(search)
+  .then(movies => response.send(movies).status(200))
+  .catch((error) => {
+    console.error(error);
+    response.status(200).send('Sorry. Something went wrong!')
+  });
+}
