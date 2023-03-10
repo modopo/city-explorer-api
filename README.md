@@ -1,7 +1,7 @@
 # city-explorer-api
 
 **Author**: Jonathan Tsai
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Version**: 1.3.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
 
@@ -17,9 +17,9 @@ This project uses npm, Node.js, Express.JS and dotenv to provide endpoints the A
 
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
+- Implemented backend local server
 
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
+- Implemented starter code for backend local server for caching
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
@@ -43,3 +43,11 @@ Finish Time: 5 PM
 Actual Time: 6 PM
 
 ![Lab 07 WRRC](./lab_07_wrrc.png)
+
+Feature: Caching
+Estimated time: 4 hours
+Start Time: 12 PM
+Finish Time: 4:00 PM
+Actual Time: 3:30 PM
+
+![Lab 10 WRRC](./lab_10_wrrc.png)
