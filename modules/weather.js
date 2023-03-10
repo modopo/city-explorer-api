@@ -24,7 +24,7 @@ function getForecast (req, res, next) {
 
   axios.get(url, { params })
     .then(forecast => forecast.data.data.map(info => new Forecast(info)))
-    .then(dataToSend => res.send(dataToSend))
+    .then(dataToSend => res.status(200).send(dataToSend))
     .catch(err => console.error(err));
 }
 
